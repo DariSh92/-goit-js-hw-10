@@ -1,7 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
-import NewsCountriesApiService from './fetchCountries';
-// import { fetchCountries } from './fetchCountries';
+// import NewsCountriesApiService from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 import debounce from 'lodash.debounce';
 
 const refs = {
@@ -12,7 +12,7 @@ const refs = {
 
 const DEBOUNCE_DELAY = 300;
 
-const newsCountriesApiService = new NewsCountriesApiService();
+// const newsCountriesApiService = new NewsCountriesApiService();
 
 refs.searchForm.addEventListener(
   'input',
@@ -24,12 +24,12 @@ function onInputChange(e) {
   refs.countryListEl.innerHTML = '';
   refs.countryInfoEl.innerHTML = '';
   // function onInputChange() {
-  newsCountriesApiService.query = e.target.value.trim();
-  //   const name = refs.searchForm.value.trim();
+  //   newsCountriesApiService.query = e.target.value.trim();
+  const name = refs.searchForm.value.trim();
 
-  if (newsCountriesApiService.query !== '') {
-    newsCountriesApiService
-      .fetchCountries()
+  if (name !== '') {
+    // newsCountriesApiService
+    fetchCountries(name)
       .then(response => {
         // function onInputChange() {
         //   const name = refs.searchForm.value.trim();
@@ -47,7 +47,7 @@ function onInputChange(e) {
           Notiflix.Notify.info(
             'Too many matches found. Please enter a more specific name.'
           );
-        } else if (response.length >= 2 && response.length < 10) {
+        } else if (response.length < 10 && response.length >= 2) {
           refs.countryListEl.insertAdjacentHTML(
             'beforeend',
             renderCountryList(response)
