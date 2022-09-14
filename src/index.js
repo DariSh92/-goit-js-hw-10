@@ -86,6 +86,9 @@ function renderCountryInfo(countries) {
       <img width="50px" height="50px" src='${flags.svg}' 
       alt='${name.official} flag' />
         <ul class="country-info__list">
+            <li class="country-info__item"><p><b>Name: </b>${
+              name.official
+            }</p></li>
             <li class="country-info__item"><p><b>Capital: </b>${capital}</p></li>
             <li class="country-info__item"><p><b>Population: </b>${population}</p></li>
             <li class="country-info__item"><p><b>Languages: </b>${Object.values(
