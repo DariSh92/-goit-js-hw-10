@@ -19,51 +19,50 @@ refs.searchForm.addEventListener(
   debounce(onInputChange, DEBOUNCE_DELAY)
 );
 
-function onInputChange(e) {
-  //   e.preventDefault();
-  refs.countryListEl.innerHTML = '';
-  refs.countryInfoEl.innerHTML = '';
-  // function onInputChange() {
-  //   newsCountriesApiService.query = e.target.value.trim();
+// function onInputChange(e) {
+//   //   e.preventDefault();
+//   //   refs.countryListEl.innerHTML = '';
+//   //   refs.countryInfoEl.innerHTML = '';
+//   // function onInputChange() {
+//   //   newsCountriesApiService.query = e.target.value.trim();
+//   const name = refs.searchForm.value.trim();
+
+//   if (name !== '') {
+//     // newsCountriesApiService
+//     fetchCountries(name)
+//       .then(response => {
+function onInputChange() {
   const name = refs.searchForm.value.trim();
-
-  if (name !== '') {
-    // newsCountriesApiService
-    fetchCountries(name)
-      .then(response => {
-        // function onInputChange() {
-        //   const name = refs.searchForm.value.trim();
-        //   if (name === '') {
-        //     return (
-        //       (refs.countryListEl.innerHTML = ''), (refs.countryInfoEl.innerHTML = '')
-        //     );
-        //   }
-        // fetchCountries()
-        //     .then(response => {
-        //         refs.countryListEl.innerHTML = '';
-        //         refs.countryInfoEl.innerHTML = '';
-
-        if (response.length > 10) {
-          Notiflix.Notify.info(
-            'Too many matches found. Please enter a more specific name.'
-          );
-        } else if (response.length < 10 && response.length >= 2) {
-          refs.countryListEl.insertAdjacentHTML(
-            'beforeend',
-            renderCountryList(response)
-          );
-        } else {
-          refs.countryInfoEl.insertAdjacentHTML(
-            'beforeend',
-            renderCountryInfo(response)
-          );
-        }
-      })
-      .catch(() => {
-        Notiflix.Notify.failure('Oops, there is no country with that name');
-        return [];
-      });
+  if (name === '') {
+    return (
+      (refs.countryListEl.innerHTML = ''), (refs.countryInfoEl.innerHTML = '')
+    );
   }
+  fetchCountries(name)
+    .then(response => {
+      refs.countryListEl.innerHTML = '';
+      refs.countryInfoEl.innerHTML = '';
+
+      if (response.length > 10) {
+        Notiflix.Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+      } else if (response.length < 10 && response.length >= 2) {
+        refs.countryListEl.insertAdjacentHTML(
+          'beforeend',
+          renderCountryList(response)
+        );
+      } else {
+        refs.countryInfoEl.insertAdjacentHTML(
+          'beforeend',
+          renderCountryInfo(response)
+        );
+      }
+    })
+    .catch(() => {
+      Notiflix.Notify.failure('Oops, there is no country with that name');
+      return [];
+    });
 }
 
 function renderCountryList(countries) {
